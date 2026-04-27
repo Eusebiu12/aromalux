@@ -1,0 +1,247 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Modern E-commerce Design System for Candles & Fragrances */
+
+@layer base {
+:root {
+/* General Colors */
+--background: 40 20% 95%; /* very soft cream */
+--foreground: 30 20% 20%; /* dark brown text */
+
+
+--card: 40 15% 90%; /* soft warm card */
+--card-foreground: 30 20% 20%;
+
+--popover: 40 15% 88%;
+--popover-foreground: 30 20% 20%;
+
+--primary: 25 70% 60%; /* golden accent */
+--primary-foreground: 0 0% 98%; /* white text on primary buttons */
+
+--secondary: 30 15% 85%; /* beige secondary elements */
+--secondary-foreground: 30 20% 20%;
+
+--muted: 35 10% 80%;
+--muted-foreground: 30 20% 40%;
+
+--accent: 25 50% 65%; /* subtle warm pink/gold */
+--accent-foreground: 0 0% 98%;
+
+--destructive: 0 72% 51%;
+--destructive-foreground: 0 0% 98%;
+
+--border: 35 10% 80%;
+--input: 40 10% 90%;
+--ring: 25 70% 60%;
+
+--radius: 0.75rem;
+
+/* Glassmorphism adjustments for warm cozy theme */
+--glass-bg: 40 10% 90% / 0.1; /* soft warm translucent */
+--glass-border: 40 10% 90% / 0.2;
+--glass-shadow: 40 10% 90% / 0.3;
+
+--footer-glass-bg: 40 10% 95% / 0.15; /* warm soft footer */
+
+--gradient-primary: linear-gradient(135deg, hsl(25 70% 60%), hsl(25 65% 55%));
+--gradient-secondary: linear-gradient(135deg, hsl(30 15% 85%), hsl(40 10% 90%));
+--gradient-glass: linear-gradient(135deg, hsla(40, 10%, 90%, 0.1), hsla(40, 10%, 90%, 0.05));
+
+--shadow-glow: 0 0 40px hsl(25 70% 60% / 0.3);
+--shadow-glass: 0 8px 32px hsla(40, 10%, 90%, 0.1);
+--shadow-elegant: 0 20px 40px -10px hsl(25 70% 60% / 0.4);
+
+--animation-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+--animation-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+--sidebar-background: 40 10% 90%;
+--sidebar-foreground: 30 20% 20%;
+
+--sidebar-primary: 25 70% 60%;
+--sidebar-primary-foreground: 0 0% 98%;
+
+--sidebar-accent: 25 50% 65%;
+--sidebar-accent-foreground: 0 0% 98%;
+
+--sidebar-border: 40 10% 90%;
+--sidebar-ring: 25 70% 60%;
+
+
+}
+
+.light {
+--background: 40 20% 95%;
+--foreground: 0 0% 0%;
+
+
+--card: 40 15% 90%;
+--card-foreground: 0 0% 0%;
+
+--popover: 40 15% 88%;
+--popover-foreground: 0 0% 0%;
+
+--primary: 25 70% 60%;
+--primary-foreground: 0 0% 98%;
+
+--secondary: 40 15% 90%;
+--secondary-foreground: 0 0% 0%;
+
+--muted: 35 10% 80%;
+--muted-foreground: 0 0% 0%;
+
+--accent: 25 50% 65%;
+--accent-foreground: 0 0% 98%;
+
+--destructive: 0 72% 51%;
+--destructive-foreground: 0 0% 98%;
+
+--border: 35 10% 80%;
+--input: 40 10% 90%;
+--ring: 25 70% 60%;
+
+
+}
+
+.dark {
+--background: 30 20% 15%; /* dark cozy background */
+--foreground: 40 10% 95%; /* soft text on dark */
+
+
+--card: 30 20% 15%;
+--card-foreground: 40 10% 95%;
+
+--popover: 30 20% 15%;
+--popover-foreground: 40 10% 95%;
+
+--primary: 25 70% 60%;
+--primary-foreground: 0 0% 98%;
+
+--secondary: 30 15% 20%;
+--secondary-foreground: 40 10% 95%;
+
+--muted: 30 15% 20%;
+--muted-foreground: 40 10% 80%;
+
+--accent: 25 50% 65%;
+--accent-foreground: 0 0% 98%;
+
+--destructive: 0 62.8% 30.6%;
+--destructive-foreground: 0 0% 98%;
+
+--border: 30 15% 20%;
+--input: 30 15% 20%;
+--ring: 25 70% 60%;
+
+--sidebar-background: 30 15% 15%;
+--sidebar-foreground: 40 10% 95%;
+--sidebar-primary: 25 70% 60%;
+--sidebar-primary-foreground: 0 0% 98%;
+--sidebar-accent: 25 50% 65%;
+--sidebar-accent-foreground: 0 0% 98%;
+--sidebar-border: 30 15% 15%;
+--sidebar-ring: 25 70% 60%;
+
+
+}
+}
+
+@layer base {
+
+* {
+  @apply border-border;
+  }
+
+body {
+@apply bg-background text-foreground overflow-x-hidden;
+}
+}
+
+@layer components {
+/* Glassmorphism utilities */
+.glass {
+@apply backdrop-blur-md border border-[hsla(var(--glass-border))];
+background: hsla(var(--glass-bg));
+box-shadow: var(--shadow-glass);
+}
+
+.footer-glass {
+@apply backdrop-blur-md border border-[hsla(var(--glass-border))];
+background: hsla(var(--footer-glass-bg));
+box-shadow: var(--shadow-glass);
+}
+
+.glass-panel {
+@apply glass rounded-xl p-6;
+}
+
+.glass-card {
+@apply glass rounded-lg p-4 hover:shadow-[var(--shadow-elegant)] transition-all duration-300;
+}
+
+/* Gradient utilities */
+.gradient-primary {
+background: var(--gradient-primary);
+}
+
+.gradient-glass {
+background: var(--gradient-glass);
+}
+
+/* Animation utilities */
+.animate-smooth {
+transition: var(--animation-smooth);
+}
+
+.animate-bounce-in {
+transition: var(--animation-bounce);
+}
+
+/* Glow effects */
+.glow-primary {
+box-shadow: var(--shadow-glow);
+}
+
+.glow-on-hover:hover {
+box-shadow: var(--shadow-glow);
+}
+}
+
+@layer utilities {
+/* Custom scrollbar */
+.scrollbar-hide {
+-ms-overflow-style: none;
+scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+display: none;
+}
+
+/* Custom animations */
+@keyframes slideInRight {
+from { transform: translateX(100%); opacity: 0; }
+to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInLeft {
+from { transform: translateX(-100%); opacity: 0; }
+to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInTop {
+from { transform: translateY(-100%); opacity: 0; }
+to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeInUp {
+from { transform: translateY(20px); opacity: 0; }
+to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-slide-in-right { animation: slideInRight 0.3s ease-out; }
+.animate-slide-in-left { animation: slideInLeft 0.3s ease-out; }
+.animate-slide-in-top { animation: slideInTop 0.3s ease-out; }
+.animate-fade-in-up { animation: fadeInUp 0.6s ease-out; }
+}
