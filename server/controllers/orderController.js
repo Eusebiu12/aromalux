@@ -2,7 +2,12 @@ import ErrorHandler from "../middlewares/errorMiddleware.js";
 import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import database from "../database/db.js";
 
+import Stripe from "stripe";
+import { sendEmail } from "../utils/sendEmail.js";
+
 import { createCheckoutSession } from "../utils/generatePaymentIntent.js";
+
+const stripe = Stripe("sk_test_51SSxGWQqkq6ox4sN9KGJCK7PKXdGSfGhBUt9vgytpEHufBq7lTHt9VraHPqjM09RjebLG52YIPc63Xc9JA6dCTdf00jya3ovAl");
 
 export const placeNewOrder = catchAsyncErrors(async (req, res, next) => {
     const {
@@ -122,7 +127,7 @@ export const placeNewOrder = catchAsyncErrors(async (req, res, next) => {
     
     const YOUR_DOMAIN = process.env.NODE_ENV === 'production' 
                         ? 'https://siteultau.com' 
-                        : 'http://localhost:5174'; 
+                        : 'http://localhost:5173'; 
     
 
     console.log("DEBUG: Apelare createCheckoutSession cu Order ID:", orderId, "și Total:", total_price); 
@@ -313,4 +318,59 @@ export const deleteOrder = catchAsyncErrors(async (req, res, next) => {
         message: "Order deleted.",
         order: results.rows[0],
     });
+});
+
+export const verifyPaymentAndConfirm = catchAsyncErrors(async (req, res, next) => {
+    const { session_id, order_id } = req.body;
+
+    if (!session_id || !order_id) {
+        return next(new ErrorHandler("Lipsesc detaliile sesiunii de plată.", 400));
+    }
+
+    // 1. Verificăm statusul real la Stripe
+    const session = await stripe.checkout.sessions.retrieve(session_id);
+
+    if (session.payment_status === 'paid') {
+        
+        // 2. Marcăm comanda ca fiind PLĂTITĂ (pentru fetchMyOrders)
+        await database.query(
+            `UPDATE orders SET paid_at = NOW(), order_status = 'Processing' WHERE id = $1`,
+            [order_id]
+        );
+
+        // 3. Actualizăm statusul și în tabelul payments
+        await database.query(
+            `UPDATE payments SET payment_status = 'Paid' WHERE order_id = $1`,
+            [order_id]
+        );
+
+        // 4. Extragem emailul și trimitem confirmarea
+        // Luăm emailul de la Stripe, sau, dacă lipsește, îl luăm de la userul logat
+        const customerEmail = session.customer_details?.email || req.user?.email;
+
+        if (customerEmail) {
+            await sendEmail({
+                email: customerEmail,
+                subject: `AromaLux - Confirmare Plată Comanda #${order_id}`,
+                message: `
+                    <div style="font-family: Arial, sans-serif; padding: 20px;">
+                        <h2 style="color: #4CAF50;">Plata ta a fost confirmată!</h2>
+                        <p>Îți mulțumim pentru comandă.</p>
+                        <p>ID-ul comenzii tale este: <strong>${order_id}</strong></p>
+                        <p>Banii au fost încasați cu succes, iar noi ne apucăm să pregătim lumânările tale!</p>
+                    </div>
+                `
+            });
+        }
+
+        return res.status(200).json({ 
+            success: true, 
+            message: "Plata confirmată. Comanda actualizată și emailul a fost trimis!" 
+        });
+    } else {
+        return res.status(400).json({ 
+            success: false, 
+            message: "Plata nu a fost finalizată." 
+        });
+    }
 });

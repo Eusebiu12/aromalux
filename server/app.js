@@ -18,18 +18,20 @@ import { sendEmail } from "./utils/sendEmail.js";
 
 const app = express();
 
+app.use(
+    cors({
+        origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        credentials: true,
+    })
+);
+
 config({ path: "./config/config.env" });
 
 const stripeClient = Stripe(process.env.STRIPE_SECRET_KEY); 
 export { stripeClient };
 
-app.use(
-    cors({
-        origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_URL],
-        methods: ["GET", "POST", "PUT", "DELETE"],
-        credentials: true,
-    })
-);
+
 
 // -------------------------------------------------------------
 // ⚠️ WEBHOOK ENDPOINT PENTRU CONFIRMAREA PLĂȚII STRIPE CHECKOUT
@@ -195,7 +197,7 @@ app.post(
 // MIDDLEWARE-URI GENERALE (TREBUIE SĂ FIE DUPĂ WEBHOOK-UL RAW)
 // -------------------------------------------------------------
 app.use(cookieParser());
-app.use(express.json());
+app.use(express.json()); // Aceasta linie trebuie să fie ÎNAINTE de rutele de produse
 app.use(express.urlencoded({ extended: true }));
 
 app.use(
@@ -206,10 +208,10 @@ app.use(
 );
 
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/products", productRouter); 
 app.use("/api/v1/product", productRouter);
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/order", orderRouter);
-
 app.use("/api/v1/raffle", raffleRoutes);
 
 (async () => {

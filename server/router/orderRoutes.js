@@ -1,5 +1,8 @@
 
 import express from "express";
+
+import { verifyPaymentAndConfirm } from "../controllers/orderController.js";
+
 import {
   fetchSingleOrder,
   placeNewOrder,
@@ -35,6 +38,8 @@ router.delete(
   authorizedRoles("Admin"),
   deleteOrder
 );
+
+router.post("/verify-payment", isAuthenticated, verifyPaymentAndConfirm);
 
 
 

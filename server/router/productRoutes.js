@@ -38,6 +38,9 @@ router.delete(
   authorizedRoles("Admin"),
   deleteProduct
 );
-router.post("/ai-search", isAuthenticated, fetchAIFilteredProducts);
+// În productRoutes.js - să fie fix așa:
+router.post("/ai-search", fetchAIFilteredProducts);
 
 export default router;
+
+

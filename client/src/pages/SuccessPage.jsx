@@ -1,4 +1,3 @@
-// src/pages/SuccessPage.jsx (Exemplu)
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -15,7 +14,7 @@ const SuccessPage = () => {
         const sessionId = params.get('session_id');
 
         if (sessionId) {
-            toast.success("Payment Successful! Your order is being processed.", {
+            toast.success("Plată reușită! Vă trimitem emailul de confirmare.", {
                 autoClose: 5000, 
                 position: "top-right", 
             });
@@ -23,8 +22,8 @@ const SuccessPage = () => {
             dispatch(clearCart()); 
             
             const timer = setTimeout(() => {
-                navigateTo('/');
-            }, 500);
+                navigateTo('/orders'); // Redirecționează către "Comenzile mele"
+            }, 3000);
 
             return () => clearTimeout(timer);
         } else {
@@ -34,8 +33,8 @@ const SuccessPage = () => {
 
     return (
         <div className="min-h-screen pt-40 text-center">
-            <h1 className="text-3xl text-primary">Confirming Payment...</h1>
-            <p className="text-muted-foreground mt-2">You will be redirected shortly.</p>
+            <h1 className="text-3xl text-primary">Vă mulțumim pentru comandă!</h1>
+            <p className="text-muted-foreground mt-2">Veți fi redirecționat în curând.</p>
         </div>
     );
 };

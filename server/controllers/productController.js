@@ -446,60 +446,42 @@ export const deleteReview = catchAsyncErrors(async (req, res, next) => {
         product: updatedProduct.rows[0],
     });
 });
-
 export const fetchAIFilteredProducts = catchAsyncErrors(
     async (req, res, next) => {
         const { userPrompt } = req.body;
+
         if (!userPrompt) {
             return next(new ErrorHandler("Provide a valid prompt.", 400));
         }
 
-        const filterKeywords = (query) => {
-            const stopWords = new Set([
-                "the", "they", "them", "then", "I", "we", "you", "he", "she", "it", "is", "a", "an", "of", "and", "or", "to", "for", "from", "on", "who", "whom", "why", "when", "which", "with", "this", "that", "in", "at", "by", "be", "not", "was", "were", "has", "have", "had", "do", "does", "did", "so", "some", "any", "how", "can", "could", "should", "would", "there", "here", "just", "than", "because", "but", "its", "it's", "if", ".", ",", "!", "?", ">", "<", ";", "`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-            ]);
+        // 1. Luăm toate produsele (sau un set mare) pentru a lăsa AI-ul să decidă
+        // Nu mai filtrăm prin SQL cu keywords, pentru că AI-ul e mai deștept la sinonime
+        const result = await database.query(`SELECT * FROM products LIMIT 100`);
+        const allProducts = result.rows;
 
-            return query
-                .toLowerCase()
-                .replace(/[^\w\s]/g, "")
-                .split(/\s+/)
-                .filter((word) => !stopWords.has(word))
-                .map((word) => `%${word}%`);
-        };
-
-        const keywords = filterKeywords(userPrompt);
-        const result = await database.query(
-            `
-            SELECT * FROM products
-            WHERE name ILIKE ANY($1)
-            OR description ILIKE ANY($1)
-            OR category ILIKE ANY($1)
-            LIMIT 200; 
-            `,
-            [keywords]
-        );
-
-        const filteredProducts = result.rows;
-
-        if (filteredProducts.length === 0) {
+        if (allProducts.length === 0) {
             return res.status(200).json({
                 success: true,
-                message: "No products found matching your prompt.",
+                message: "No products in database.",
                 products: [],
             });
         }
 
-        const { success, products } = await getAIRecommendation(
+        // 2. Chemăm utilitarul de AI
+        // Pasăm promptul utilizatorului și lista brută de produse
+        const aiResponse = await getAIRecommendation(
             req,
             res,
             userPrompt,
-            filteredProducts
+            allProducts
         );
 
+        // 3. Trimitem răspunsul final
+        // Verificăm dacă aiResponse a venit cu succes (depinde cum e structurat return-ul în utils)
         res.status(200).json({
-            success: success,
-            message: "AI filtered products.",
-            products,
+            success: aiResponse.success,
+            message: aiResponse.success ? "AI filtered products." : "AI failed to filter.",
+            products: aiResponse.products || [],
         });
     }
 );
