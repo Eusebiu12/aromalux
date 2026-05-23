@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { clearCart } from "../store/slices/cartSlice";
 
 const PaymentForm = () => {
-  const { paymentIntent: clientSecret, currentOrderId } = useSelector(
+  const { paymentIntent: clientSecret } = useSelector(
     (state) => state.order
   );
 

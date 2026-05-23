@@ -18,8 +18,6 @@ const LoginModal = () => {
     authUser,
     isSigningUp,
     isLoggingIn,
-    isUpdatingProfile,
-    isUpdatingPassword,
     isRequestingForToken
   } = useSelector(state => state.auth)
 

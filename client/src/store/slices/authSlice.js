@@ -39,7 +39,7 @@ export const getUser = createAsyncThunk("auth/getUser", async(data, thunkAPI) =>
 );
 export const logout = createAsyncThunk("auth/logout", async (data, thunkAPI) => {
   try {
-    const res = await axiosInstance.get("/auth/logout",data); 
+     await axiosInstance.get("/auth/logout",data); 
     return null; 
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data?.message || "Failed to logout");
@@ -48,7 +48,7 @@ export const logout = createAsyncThunk("auth/logout", async (data, thunkAPI) => 
 
 export const forgotPassword = createAsyncThunk("auth/forgot/password", async(email, thunkAPI) => {
   try{
-    const res = await axiosInstance.post("/auth/password/forgot?frontendUrl=http://localhost:5173", email);
+     await axiosInstance.post("/auth/password/forgot?frontendUrl=http://localhost:5173", email);
     return null;
   } catch (error) {
     toast.error(error.response.data.message);
@@ -126,7 +126,7 @@ const authSlice = createSlice({
     .addCase(login.rejected,(state) => {
       state.isLoggingIn = false;
     })
-    .addCase(getUser.pending,(state,action) => {
+    .addCase(getUser.pending,(state) => {
       state.isCheckingAuth = true;
       state.authUser = null;
     })
@@ -134,21 +134,18 @@ const authSlice = createSlice({
       state.isCheckingAuth = false;
       state.authUser = action.payload;
     })
-    .addCase(getUser.rejected,(state,action) => {
+    .addCase(getUser.rejected,(state) => {
       state.isCheckingAuth = false;
       state.authUser = null;
     })
-    .addCase(logout.fulfilled,(state,action) => {
+    .addCase(logout.fulfilled,(state) => {
       state.authUser = null;
       state.token = null;
-    })
-    .addCase(logout.rejected,(state,action) => {
-      state.authUser = state.authUser;
     })
     .addCase(forgotPassword.pending,(state) => {
       state.isRequestingForToken = true;
     })
-    .addCase(forgotPassword.fulfilled,(state,action) => {
+    .addCase(forgotPassword.fulfilled,(state) => {
       state.isRequestingForToken = false;
     })
     .addCase(forgotPassword.rejected,(state) => {
@@ -167,7 +164,7 @@ const authSlice = createSlice({
     .addCase(updatePassword.pending,(state) => {
       state.isUpdatingPassword = true;
     })
-    .addCase(updatePassword.fulfilled,(state,action) => {
+    .addCase(updatePassword.fulfilled,(state) => {
       state.isUpdatingPassword = false;
     })
     .addCase(updatePassword.rejected,(state) => {

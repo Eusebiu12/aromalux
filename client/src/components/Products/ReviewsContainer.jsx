@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteReview, postReview } from "../../store/slices/productSlice";
-import { isRouteErrorResponse } from "react-router-dom";
 import { Star } from "lucide-react";
 
 const ReviewsContainer = ({ product, productReviews }) => {
