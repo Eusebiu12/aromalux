@@ -120,7 +120,8 @@ export const getUser = ()=> async(dispatch)=>{
     {
       dispatch(authSlice.actions.getUserSuccess(res.data.user));
     });
-  } catch(){
+  } catch(error){
+    console.error("Error to get the user.", error);
     dispatch(authSlice.actions.getUserFailed());
   }
 };

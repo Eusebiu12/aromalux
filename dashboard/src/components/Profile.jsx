@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import avatar from "../assets/avatar.jpg";
 import Header from "./Header";
 import { useDispatch, useSelector } from "react-redux";
 import { updateAdminPassword, updateAdminProfile } from "../store/slices/authSlice";
