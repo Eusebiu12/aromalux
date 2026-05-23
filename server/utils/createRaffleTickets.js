@@ -133,7 +133,6 @@ export async function createRaffleTickets(orderId, userId) {
     } catch (error) {
         await client.query('ROLLBACK'); 
         console.error("FATAL ERROR creating raffle tickets:", error);
-        throw new Error("Failed to process raffle tickets.");
     } finally {
         client.release();
     }

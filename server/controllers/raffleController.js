@@ -88,7 +88,7 @@ export const createRaffle = catchAsyncErrors(async (req, res, next) => {
 });
 
 
-export const fetchAllRaffles = catchAsyncErrors(async (req, res, next) => {
+export const fetchAllRaffles = catchAsyncErrors(async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = 10;
     const offset = (page - 1) * limit;

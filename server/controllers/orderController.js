@@ -151,7 +151,7 @@ export const placeNewOrder = catchAsyncErrors(async (req, res, next) => {
 });
 
 
-export const fetchSingleOrder = catchAsyncErrors(async (req, res, next) => {
+export const fetchSingleOrder = catchAsyncErrors(async (req, res) => {
     const { orderId } = req.params;
     const result = await database.query(
         `
@@ -193,7 +193,7 @@ GROUP BY o.id, s.id;
     });
 });
 
-export const fetchMyOrders = catchAsyncErrors(async (req, res, next) => {
+export const fetchMyOrders = catchAsyncErrors(async (req, res) => {
     const result = await database.query(
         `
             SELECT o.*, COALESCE(
@@ -234,7 +234,7 @@ GROUP BY o.id, s.id
     });
 });
 
-export const fetchAllOrders = catchAsyncErrors(async (req, res, next) => {
+export const fetchAllOrders = catchAsyncErrors(async (req, res) => {
     const result = await database.query(`
              SELECT o.*,
     COALESCE(json_agg(

@@ -3,7 +3,7 @@ import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import database from "../database/db.js";
 import { v2 as cloudinary } from "cloudinary";
 
-export const getAllUsers = catchAsyncErrors(async (req, res, next) => {
+export const getAllUsers = catchAsyncErrors(async (req, res) => {
   const page = parseInt(req.query.page) || 1;
 
   const totalUsersResult = await database.query(
@@ -50,7 +50,7 @@ export const deleteUser = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-export const dashboardStats = catchAsyncErrors(async (req, res, next) => {
+export const dashboardStats = catchAsyncErrors(async (req, res) => {
   const today = new Date();
   const todayDate = today.toISOString().split("T")[0];
   const yesterday = new Date(today);

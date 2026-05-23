@@ -3,7 +3,6 @@ import ErrorHandler from "../middlewares/errorMiddleware.js";
 import { v2 as cloudinary } from "cloudinary";
 import database from "../database/db.js";
 import { getAIRecommendation } from "../utils/getAIRecommendation.js";
-import { sendEmail } from "../utils/sendEmail.js"; 
 
 
 export const createProduct = catchAsyncErrors(async (req, res, next) => {
@@ -57,7 +56,7 @@ export const createProduct = catchAsyncErrors(async (req, res, next) => {
 });
 
 
-export const fetchAllProducts = catchAsyncErrors(async (req, res, next) => {
+export const fetchAllProducts = catchAsyncErrors(async (req, res) => {
     const { availability, price, category, ratings, search } = req.query;
     const page = parseInt(req.query.page) || 1;
     const limit = 10;
@@ -192,7 +191,6 @@ export const updateProduct = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler("Product not found.", 404));
     }
 
-    const currentProduct = productCheck.rows[0];
     let imagesToKeep = [];
     let uploadedNewImages = [];
     
@@ -302,7 +300,7 @@ export const deleteProduct = catchAsyncErrors(async (req, res, next) => {
 });
 
 
-export const fetchSingleProduct = catchAsyncErrors(async (req, res, next) => {
+export const fetchSingleProduct = catchAsyncErrors(async (req, res) => {
     const { productId } = req.params;
 
     const result = await database.query(
