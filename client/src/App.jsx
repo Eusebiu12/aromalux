@@ -37,7 +37,7 @@ const App = () => {
 
   useEffect(() =>{
     dispatch(getUser());
-  }, [getUser]);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(fetchAllProducts({
@@ -48,7 +48,7 @@ const App = () => {
       availability: "",
       page:1,
     }));
-  },[]);
+  },[dispatch]);
 
   const { products} = useSelector(state => state.product)
 

@@ -38,7 +38,7 @@ const HeroSlider = () => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 8000);
     return () => clearInterval(timer);
-  }, []);
+  }, [slides.length]);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
