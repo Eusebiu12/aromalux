@@ -7,6 +7,8 @@ import{
   updateProfile,
 } from "../../store/slices/authSlice";
 
+import { toggleAuthPopup } from "./popupSlice";
+
 const ProfilePanel = () => {
   const dispatch = useDispatch();
 
