@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import avatar from "../assets/avatar.jpg";
 import { Menu } from "lucide-react";
+import { toggleNavbar } from "../store/slices/extraSlice";
 
 const Header = () => {
 
@@ -20,7 +21,7 @@ const Header = () => {
       <span>{openedComponent}</span>
     </p>
     <div className="flex gap-3 items-center">
-      <Menu className="block md:hidden" onClick={()=> dispatch(toggleNavBar())}/>
+      <Menu className="block md:hidden" onClick={()=> dispatch(toggleNavbar())}/>
       <img src= {user?.avatar?.url || avatar}
        alt={user?.name || avatar}
        className="w-14 h-14 rounded-full object-cover" />

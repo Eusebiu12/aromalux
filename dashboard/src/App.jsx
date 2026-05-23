@@ -36,7 +36,7 @@ function App() {
   useEffect(()=>
   {
     dispatch(getUser());
-  },[]);
+  },[dispatch]);
   useEffect(()=>{
     if(isAuthenticated){
       dispatch(getDashboardStats());
@@ -44,7 +44,7 @@ function App() {
       dispatch(fetchAllProducts());
       dispatch(fetchAllRaffles());
     }
-  },[isAuthenticated])
+  },[isAuthenticated,dispatch])
 
   const renderDashboardContent = () =>{
     switch (openedComponent){

@@ -41,7 +41,7 @@ const Stats = () => {
       setRevenueChange(revenueChangeText);
 
       }
-    },[yesterdayRevenue]);
+    },[yesterdayRevenue,todayRevenue]);
 
   return(
   <>

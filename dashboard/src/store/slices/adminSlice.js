@@ -45,7 +45,7 @@ export const adminSlice = createSlice({
     deleteUserFailed(state){
       state.loading = false;
     },
-    getStatsRequest(state,action){
+    getStatsRequest(state){
       state.loading = true;
     },
     getStatsSuccess(state,action){
@@ -77,7 +77,7 @@ export const fetchAllUsers = (page)=>async(dispatch)=>{
   .then(res=>{
     dispatch(adminSlice.actions.getAllUsersSuccess(res.data));
   })
-    .catch((error)=>{
+    .catch(()=>{
       dispatch(adminSlice.actions.getAllUsersFailed());
     });
 };
@@ -109,7 +109,7 @@ export const getDashboardStats = ()=>async(dispatch)=>{
   .then(res=>{
     dispatch(adminSlice.actions.getStatsSuccess(res.data));
   })
-    .catch((error)=>{
+    .catch(()=>{
       dispatch(adminSlice.actions.getStatsFailed());
     });
 };

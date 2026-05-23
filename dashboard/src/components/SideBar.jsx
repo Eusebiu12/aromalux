@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Bell,
   LayoutDashboard,
@@ -12,7 +12,7 @@ import {
   Tickets,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import { toggleComponent , toggleNavbar } from "../store/slices/extraSlice";
 import { logout } from "../store/slices/authSlice";
@@ -48,7 +48,7 @@ const SideBar = () => {
   ];
 
   const {isNavbarOpened} = useSelector((state)=> state.extra);
-  const {isAuthenticated} = useSelector((state)=> state.auth);
+  //const {isAuthenticated} = useSelector((state)=> state.auth);
 
   const dispatch = useDispatch();
   const handleLogout = ()=>{

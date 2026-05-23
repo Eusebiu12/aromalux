@@ -27,7 +27,7 @@ const extraSlice = createSlice({
     toggleViewProductModal: (state)=>{
       state.isViewProductModalOpened =!state.isViewProductModalOpened;
     },
-    toggleUpdateProductModal: (state,action)=>{
+    toggleUpdateProductModal: (state)=>{
       state.isUpdateProductModalOpened = !state.isUpdateProductModalOpened;
     },
 

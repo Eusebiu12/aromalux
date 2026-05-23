@@ -11,16 +11,16 @@ const { loading } = useSelector((state) => state.raffle);
 const { user } = useSelector((state) => state.auth);
 
 
-const handleStartDateChange = (e) => {
-  const selectedStartDate = e.target.value; 
-  setFormData({ ...formData, start_date: selectedStartDate });
-};
+// const handleStartDateChange = (e) => {
+//   const selectedStartDate = e.target.value; 
+//   setFormData({ ...formData, start_date: selectedStartDate });
+// };
 
-const handleEndDateChange = (e) => {
-  const selectedDate = e.target.value; 
-  const endDateTime = `${selectedDate}T23:59:59`;
-  setFormData({ ...formData, end_date: endDateTime });
-};
+// const handleEndDateChange = (e) => {
+//   const selectedDate = e.target.value; 
+//   const endDateTime = `${selectedDate}T23:59:59`;
+//   setFormData({ ...formData, end_date: endDateTime });
+// };
 
 
 

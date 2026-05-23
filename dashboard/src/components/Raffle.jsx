@@ -33,7 +33,6 @@ const Raffles = () => {
   } = useSelector((state) => state.extra);
 
   const {
-    loading,
     raffles,
     totalRaffles,
     fetchingRaffles,

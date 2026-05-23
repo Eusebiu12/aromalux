@@ -19,10 +19,10 @@ const authSlice = createSlice({
       state.user = action.payload;
       state.isAuthenticated = true;
     },
-    loginFailed(state,action){
+    loginFailed(state){
       state.loading = false;
     },
-    getUserRequest(state,action){
+    getUserRequest(state){
       state.loading = true;
     },
     getUserSuccess(state,action){
@@ -30,32 +30,32 @@ const authSlice = createSlice({
       state.user = action.payload;
       state.isAuthenticated = true;
     },
-    getUserFailed(state,action){
+    getUserFailed(state){
       state.loading = false;
       state.user = null;
       state.isAuthenticated = false;
     },
-    logoutRequest(state,action){
+    logoutRequest(state){
       state.loading = true;
     },
-    logoutSuccess(state,action){
+    logoutSuccess(state){
       state.loading = false;
       state.user = null;
       state.isAuthenticated = false;
     },
-    logoutFailed(state,action){
+    logoutFailed(state){
       state.loading = false;
     },
-    forgotPasswordRequest(state,action){
+    forgotPasswordRequest(state){
       state.loading = true;
     },
-    forgotPasswordSuccess(state,action){
+    forgotPasswordSuccess(state){
       state.loading = false;
     },
-    forgotPasswordFailed(state,action){
+    forgotPasswordFailed(state){
       state.loading = false;
     },
-    resetPasswordRequest(state,action){
+    resetPasswordRequest(state){
       state.loading = true;
     },
     resetPasswordSuccess(state, action){
@@ -63,33 +63,31 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.user = action.payload;
     },
-    resetPasswordFailed(state,action){
+    resetPasswordFailed(state){
       state.loading = false;
     },
-    updateProfileRequest(state,action){
+    updateProfileRequest(state){
       state.loading = true;
     },
     updateProfileSuccess(state, action){
       state.loading = false;
       state.user = action.payload;
     },
-    updateProfileFailed(state,action){
+    updateProfileFailed(state){
       state.loading = false;
     },
-    updatePasswordRequest(state,action){
+    updatePasswordRequest(state){
       state.loading = true;
     },
-    updatePasswordSuccess(state,action){
+    updatePasswordSuccess(state){
       state.loading = false;
     },
-    updatePasswordFailed(state,action){
+    updatePasswordFailed(state){
       state.loading = false;
     },
-    resetAuthSlice(state,action)
+    resetAuthSlice(state)
     {
       state.loading = false;
-      state.user= state.user;
-      state.isAuthenticated = state.isAuthenticated;
     },
   },
 });
@@ -115,14 +113,14 @@ export const login = (data)=> async(dispatch)=>{
     toast.error(error?.response?.data?.message || error.message || "Login failed.");
   }
 };
-export const getUser = (data)=> async(dispatch)=>{
+export const getUser = ()=> async(dispatch)=>{
   dispatch(authSlice.actions.loginRequest());
   try{
     await axiosInstance.get("/auth/me").then((res)=>
     {
       dispatch(authSlice.actions.getUserSuccess(res.data.user));
     });
-  } catch(error){
+  } catch(){
     dispatch(authSlice.actions.getUserFailed());
   }
 };

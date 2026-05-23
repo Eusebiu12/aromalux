@@ -6,7 +6,7 @@ import { LoaderCircle, Trash2 } from "lucide-react";
 
 const UpdateRaffleModal = ({ selectedRaffle }) => {
     const dispatch = useDispatch();
-    const { loading, isUpdating } = useSelector((state) => state.raffle);
+    const { isUpdating } = useSelector((state) => state.raffle);
 
     const [formData, setFormData] = useState({
         title: "",
