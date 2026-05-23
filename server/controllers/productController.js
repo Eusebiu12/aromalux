@@ -122,7 +122,6 @@ export const fetchAllProducts = catchAsyncErrors(async (req, res) => {
 
     paginationPlaceholders.offset = `$${index}`;
     values.push(offset);
-    index++;
 
     const query = `
         SELECT p.*, 

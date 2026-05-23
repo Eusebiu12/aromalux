@@ -192,7 +192,11 @@ export const updateRaffle = catchAsyncErrors(async (req, res, next) => {
             }
             finalImagesArray.push(...imagesToKeep);
         } catch (e) {
-             return next(new ErrorHandler("Invalid image data received.", 400));
+             console.error("Eroare parsing images", e); 
+             return res.status(400).json({
+                 success: false,
+                 message: "Invalid image data received."
+             });
         }
     }
     
