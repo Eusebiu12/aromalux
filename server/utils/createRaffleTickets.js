@@ -3,9 +3,9 @@ import database from "../database/db.js";
 
 
 /**
- * @param {string} orderId ID-ul comenzii plătite
- * @param {string} userId ID-ul utilizatorului care a plasat comanda
- * @returns {object} { success, totalTicketsIssued, ticketsDetails }
+ * @param {string} orderId 
+ * @param {string} userId 
+ * @returns {object} //{ success, totalTicketsIssued, ticketsDetails }
  */
 export async function createRaffleTickets(orderId, userId) {
     const client = await database.connect();

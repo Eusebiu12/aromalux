@@ -22,7 +22,7 @@ const SuccessPage = () => {
             dispatch(clearCart()); 
             
             const timer = setTimeout(() => {
-                navigateTo('/orders'); // Redirecționează către "Comenzile mele"
+                navigateTo('/orders'); 
             }, 3000);
 
             return () => clearTimeout(timer);

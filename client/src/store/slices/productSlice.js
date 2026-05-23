@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../lib/axios";
 import { toast } from "react-toastify";
 import { toggleAIModal } from "./popupSlice";
-import { useSelector } from "react-redux";
 
 export const fetchAllProducts = createAsyncThunk(
   "product/fetchAll",

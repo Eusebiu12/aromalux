@@ -49,14 +49,14 @@ const Payment = () => {
             .catch(err => console.error("Stripe Load Error:", err));
     }, []);
 
-    // 2. Redirecționare la Stripe Checkout după ce sesiunea e creată (sessionId disponibil)
+   
     useEffect(() => {
         if (sessionId && stripePromise) {
             stripePromise.redirectToCheckout({ sessionId: sessionId });
         }
     }, [sessionId, stripePromise]); 
 
-    // 3. Calculul prețului 
+  
     let total = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
 
     let shippingPrice = 0;
@@ -65,7 +65,7 @@ const Payment = () => {
     }
     total = total + shippingPrice;
 
-    // 4. Funcția de Plasare a Comenzii și Apel la Backend
+    
     const handlePlaceOrder = async (e) => {
         e.preventDefault();
         
@@ -158,11 +158,11 @@ const Payment = () => {
                 </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        {/* FORM SETION */}
+                        
                         <div className="lg:col-span-2">
                             {
                                 orderStep === 1 ? (
-                                    /*STEP 1 : USER DETAILS (FORMULARUL TĂU DE LIVRARE) */
+                                    
                                     <form onSubmit={handlePlaceOrder} className="glass-panel">
                                         <h2 className="text-xl font-semibold text-foreground mb-6">
                                             Shipping Information
@@ -267,13 +267,13 @@ const Payment = () => {
                                         </button>
                                     </form>
                                 ) : (
-                                    /* STEP 2: REDIRECȚIONARE CĂTRE STRIPE */
+                                    
                                     <div className="glass-panel text-center p-10">
                                         <h2 className="text-2xl font-bold mb-4 text-primary">Redirecting to Stripe...</h2>
                                         <p className="text-muted-foreground">
                                             Please wait while we secure your payment session.
                                         </p>
-                                        {/* Link manual de fallback */}
+                                        
                                         {sessionId && (
                                             <p className="mt-4">
                                                 <a href={`https://checkout.stripe.com/pay/${sessionId}`} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-400 hover:underline">

@@ -3,9 +3,9 @@ import { axiosInstance } from "../../lib/axios";
 import { toast } from "react-toastify";
 
 
-/* ============================================================
-1. Fetch All Raffles
-============================================================ */
+
+//1. Fetch All Raffles
+
 export const fetchAllRaffles = createAsyncThunk(
  "raffle/fetchAll",
  async ({ page = 1, status = "", search = "" } = {}, thunkAPI) => {
@@ -28,28 +28,26 @@ export const fetchAllRaffles = createAsyncThunk(
 );
 
 
-/* ============================================================
-2. Fetch Single Raffle Details
-============================================================ */
+
+//2. Fetch Single Raffle Details
+
 export const fetchRaffleDetails = createAsyncThunk(
 "raffle/details", // Numele acțiunii este adaptat
 async (id, thunkAPI) => {
 try {
-// Endpoint-ul este adaptat (folosind id în loc de raffleId, cum ai în router)
+
 const res = await axiosInstance.get(`/raffle/single/${id}`); 
-return res.data.raffle; // Se returnează 'raffle'
+return res.data.raffle; 
 } catch (error) {
 return thunkAPI.rejectWithValue(
-error.response?.data?.message || "Failed to fetch raffle details." // Mesajul este adaptat
+error.response?.data?.message || "Failed to fetch raffle details." 
 );
 }
 }
 );
 
 
-/* ============================================================
-3. Join Raffle 👈 AM ADAUGAT ACEASTA
-=========================================================== */
+//3. Join Raffle 👈 AM ADAUGAT ACEASTA
 export const joinRaffle = createAsyncThunk(
  "raffle/join",
  async (raffleId, thunkAPI) => {
@@ -114,7 +112,7 @@ state.raffle = action.payload;
  })
  .addCase(joinRaffle.fulfilled, (state, action) => {
  state.joining = false;
- state.raffle = action.payload; // Actualizează detaliile rafle după alăturare
+ state.raffle = action.payload;
  })
  .addCase(joinRaffle.rejected, (state) => {
  state.joining = false;

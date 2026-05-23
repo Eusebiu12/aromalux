@@ -220,7 +220,7 @@ app.use("/api/v1/raffle", raffleRoutes);
         console.log("Database: All tables ensured and initialized.");
     } catch (err) {
         console.error("CRITICAL ERROR: Failed to initialize database tables.", err);
-        // Oprim procesul dacă nu putem crea tabelele
+       
         process.exit(1); 
     }
 })();

@@ -5,12 +5,12 @@ const stripe = Stripe("sk_test_51SSxGWQqkq6ox4sN9KGJCK7PKXdGSfGhBUt9vgytpEHufBq7
 
 /**
 
- * * @param {string} orderId - ID-ul comenzii din baza ta de date.
- * @param {number} totalPrice - Suma totală a comenzii (de exemplu, 125.50 EUR).
- * @param {string} YOUR_DOMAIN - URL-ul de bază al site-ului tău (ex: http://localhost:3000).
+ * * @param {string} orderId 
+ * @param {number} totalPrice 
+ * @param {string} DOMAIN 
  */
-export async function createCheckoutSession(orderId, totalPrice, YOUR_DOMAIN) {
-    
+export async function createCheckoutSession(orderId, totalPrice, DOMAIN) {
+
     const totalInBani = Math.round(totalPrice * 100);
     const genericLineItem = [{
         price_data: {
@@ -25,7 +25,7 @@ export async function createCheckoutSession(orderId, totalPrice, YOUR_DOMAIN) {
 
     try {
         const session = await stripe.checkout.sessions.create({
-            // Tipul de plată
+            
             payment_method_types: ['card'],
             mode: 'payment',
             
@@ -35,10 +35,10 @@ export async function createCheckoutSession(orderId, totalPrice, YOUR_DOMAIN) {
                 allowed_countries: ['RO', 'US', 'GB'], 
             },
             
-            success_url: `${YOUR_DOMAIN}/success?order_id=${orderId}&session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${YOUR_DOMAIN}/cart`,
+            success_url: `${DOMAIN}/success?order_id=${orderId}&session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${DOMAIN}/cart`,
             
-            // Metadata pentru a lega sesiunea de comanda ta
+            
             metadata: {
                 orderId: orderId,
             }
@@ -46,8 +46,6 @@ export async function createCheckoutSession(orderId, totalPrice, YOUR_DOMAIN) {
 
         
 
-        // Înregistrarea în baza de date
-        // Stocăm ID-ul Sesiunii de Checkout pentru a verifica starea plății ulterior (prin webhook)
         await database.query(
             `INSERT INTO payments 
              (order_id, payment_type, payment_status, checkout_session_id) 
@@ -56,7 +54,7 @@ export async function createCheckoutSession(orderId, totalPrice, YOUR_DOMAIN) {
         );
         console.log("DEBUG STRIPE SESSION ID:", session.id);
 
-        // Trimitem ID-ul Sesiunii către frontend
+
         return {
             success: true,
             sessionId: session.id,

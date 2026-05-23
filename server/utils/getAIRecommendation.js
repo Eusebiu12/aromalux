@@ -1,8 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-/**
- * Utilitar pentru filtrarea semantică a produselor folosind SDK-ul oficial Google Gemini.
- */
+
 export async function getAIRecommendation(req, res, userPrompt, products) {
   const API_KEY = process.env.GEMINI_API_KEY;
   
@@ -11,14 +9,13 @@ export async function getAIRecommendation(req, res, userPrompt, products) {
     return { success: false, products: [] };
   }
 
-  // Inițializăm asistentul folosind librăria oficială
   const genAI = new GoogleGenerativeAI(API_KEY);
   
-  // Magic! Aici folosim un model EXACT din lista ta validă:
+ 
   const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
   try {
-    // Trimitem doar datele esențiale ca să se miște rapid
+   
     const minimizedProducts = products.map(p => ({
       id: p.id,
       name: p.name,
@@ -41,17 +38,17 @@ export async function getAIRecommendation(req, res, userPrompt, products) {
       4. NU folosi formatare markdown (fără \`\`\`json). Returnează DOAR textul brut JSON.
     `;
 
-    // Cerem rezultatul de la AI
+  
     const result = await model.generateContent(geminiPrompt);
     let aiText = result.response.text();
     
-    // Curățăm textul ca să fim siguri că este JSON valid
+    
     aiText = aiText.replace(/```json/g, '').replace(/```/g, '').trim();
 
     const parsedData = JSON.parse(aiText);
     const recommendedIds = parsedData.products || [];
 
-    // Găsim produsele din baza ta de date pe baza ID-urilor date de AI
+    
     const matchingProducts = products.filter(p => 
         recommendedIds.some(aiId => String(aiId) === String(p.id))
     );
