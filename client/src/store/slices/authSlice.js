@@ -3,6 +3,9 @@ import { axiosInstance } from "../../lib/axios";
 import { toast } from "react-toastify";
 import { toggleAuthPopup } from "./popupSlice";
 
+const extractErrorMessage = (error) => {
+  return error.response?.data?.message || error.message || "A apărut o eroare neașteptată.";
+};
 
 export const register = createAsyncThunk("auth/register", async(data, thunkAPI) => {
   try{
@@ -11,7 +14,8 @@ export const register = createAsyncThunk("auth/register", async(data, thunkAPI) 
     thunkAPI.dispatch(toggleAuthPopup());
     return res.data.user;
   } catch (error) {
-    toast.error(error.response.data.message);
+   const errorMessage = extractErrorMessage(error);
+    toast.error(errorMessage);
     return thunkAPI.rejectWithValue(error.response.data.message);
   }
 } 
