@@ -39,6 +39,9 @@ const Orders = () => {
   filterByStatus === "All" 
   ? orders
   : orders?.filter((order)=> order.order_status === filterByStatus);
+  const sortedAndFilteredOrders = [...(filteredOrders || [])].sort(
+    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+  );
   
   const confirmDelete = ()=>{
     dispatch(deleteOrder(deleteConfirm.id));
@@ -83,7 +86,7 @@ const Orders = () => {
           </select>
         </div>
         {
-          filteredOrders.map((order)=>{
+          sortedAndFilteredOrders.map((order)=>{
             return(
               <div key={order.id} className="bg-white shadow-lg rounded-lg p-6 mb-6 transition-all">
                 <div className="flex justify-between items-start flex-wrap gap-4">
