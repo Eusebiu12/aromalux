@@ -5,8 +5,10 @@ import Pagination from "../components/Products/Pagination";
 import AISearchModal from "../components/Products/AISearchModal";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+
 //import { toggleAIModal } from "../store/slices/popupSlice";
 import React, { useState, useEffect } from "react";
+
 import { fetchAllProducts } from "../store/slices/productSlice";
 
 const Products = () => {
