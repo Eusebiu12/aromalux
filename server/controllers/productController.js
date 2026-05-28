@@ -451,8 +451,7 @@ export const fetchAIFilteredProducts = catchAsyncErrors(
             return next(new ErrorHandler("Provide a valid prompt.", 400));
         }
 
-        // 1. Luăm toate produsele (sau un set mare) pentru a lăsa AI-ul să decidă
-        // Nu mai filtrăm prin SQL cu keywords, pentru că AI-ul e mai deștept la sinonime
+        
         const result = await database.query(`SELECT * FROM products LIMIT 100`);
         const allProducts = result.rows;
 
@@ -464,8 +463,7 @@ export const fetchAIFilteredProducts = catchAsyncErrors(
             });
         }
 
-        // 2. Chemăm utilitarul de AI
-        // Pasăm promptul utilizatorului și lista brută de produse
+        
         const aiResponse = await getAIRecommendation(
             req,
             res,
@@ -473,8 +471,7 @@ export const fetchAIFilteredProducts = catchAsyncErrors(
             allProducts
         );
 
-        // 3. Trimitem răspunsul final
-        // Verificăm dacă aiResponse a venit cu succes (depinde cum e structurat return-ul în utils)
+        
         res.status(200).json({
             success: aiResponse.success,
             message: aiResponse.success ? "AI filtered products." : "AI failed to filter.",

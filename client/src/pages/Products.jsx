@@ -179,7 +179,8 @@ return <>
               setSearchQuery(e.target.value)} className="w-full pl-10 pr-4 py-3 bg-secondary border border-border rounded-lg 
               focus:outline-none text-foreground placeholder-muted-foreground"/>
           </div>
-          <button
+          
+          {/* <button
                 className="relative inline-flex items-center justify-center p-0.5 
                 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group 
                 bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 
@@ -194,8 +195,8 @@ return <>
                   <Sparkles className="w-5 h-5" />
                   <span>AI Search</span>
                 </span>
-              </button>
-
+              </button> */}
+              
         </div>
 
             {/* PRODUCTS GRID */}
