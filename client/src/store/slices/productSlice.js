@@ -180,15 +180,14 @@ const productSlice = createSlice({
       state.isReviewDeleting =false;
     } )
     .addCase(fetchProductWithAI.pending, (state) => {
-      state.isReviewDeleting = true;
+      state.aiSearching = true;
     } )
     .addCase(fetchProductWithAI.fulfilled, (state, action) => {
-    state.isReviewDeleting = false;
-    state.products = action.payload.products;
-    state.totalProducts = action.payload.products.length;
+    state.aiSearching = false;
+    state.aiProducts = action.payload.products;
   } )
     .addCase(fetchProductWithAI.rejected, (state) => {
-      state.isReviewDeleting =false;
+      state.aiSearching = false;
     } )
   },
 });
