@@ -169,9 +169,6 @@ const Footer = () => {
             <p className="text-muted-foreground text-sm">
               © 2025 AromaLux. All rights reserved.
             </p>
-            <p className="text-muted-foreground text-xs mt-1">
-              Developed By CodeWithZeeshu
-            </p>
           </div>
         </div>
       </div>
